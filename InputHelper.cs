@@ -7,23 +7,26 @@ public static class InputHelper
 {
     public static string ReadString(string prompt)
     {
-        while (true)
+        string? text = null;
+        bool isCorrect = false;
+
+        while (!isCorrect)
         {
             Console.Write(prompt);
-            string? text = Console.ReadLine();
+            text = Console.ReadLine();
+            isCorrect = !string.IsNullOrWhiteSpace(text);
 
-            if (!string.IsNullOrWhiteSpace(text))
+            if (!isCorrect)
             {
-                return text.Trim();
+                Console.WriteLine("Ошибка: строка не должна быть пустой.");
             }
-
-            Console.WriteLine("Ошибка: строка не должна быть пустой.");
         }
+
+        return text!.Trim();
     }
 
     /// <summary>Читает строку; если нажат Enter, возвращает значение по умолчанию.</summary>
-    public static string ReadStringOrDefault
-        (string prompt, string defaultValue)
+    public static string ReadStringOrDefault(string prompt, string defaultValue)
     {
         Console.Write(prompt);
         string? text = Console.ReadLine();
@@ -33,70 +36,90 @@ public static class InputHelper
 
     public static int ReadInt(string prompt, int min = 1, int max = int.MaxValue)
     {
-        while (true)
+        int value = 0;
+        bool isCorrect = false;
+
+        while (!isCorrect)
         {
             Console.Write(prompt);
+            isCorrect = int.TryParse(Console.ReadLine(), out value) &&
+                        value >= min && value <= max;
 
-            if (int.TryParse(Console.ReadLine(), out int value) &&
-                value >= min && value <= max)
+            if (!isCorrect)
             {
-                return value;
+                Console.WriteLine($"Ошибка: введите целое число от {min} до {max}.");
             }
-
-            Console.WriteLine($"Ошибка: введите целое число от {min} до {max}.");
         }
+
+        return value;
     }
 
     public static double ReadPositiveDouble(string prompt)
     {
-        while (true)
+        string text;
+        double value = 0;
+        bool isCorrect = false;
+
+        while (!isCorrect)
         {
             Console.Write(prompt);
-            string text = (Console.ReadLine() ?? "").Replace(',', '.');
+            text = (Console.ReadLine() ?? "").Replace(',', '.');
+            isCorrect = double.TryParse(text, NumberStyles.Float,
+                            CultureInfo.InvariantCulture, out value) && value > 0;
 
-            if (double.TryParse(text, NumberStyles.Float, CultureInfo.InvariantCulture, out double value) && value > 0)
+            if (!isCorrect)
             {
-                return value;
+                Console.WriteLine("Ошибка: введите положительное число.");
             }
-
-            Console.WriteLine("Ошибка: введите положительное число.");
         }
+
+        return value;
     }
 
     public static DateTime ReadDate(string prompt)
     {
-        while (true)
+        DateTime value = DateTime.MinValue;
+        bool isCorrect = false;
+
+        while (!isCorrect)
         {
             Console.Write(prompt + " (дд.мм.гггг): ");
+            isCorrect = DateTime.TryParseExact(Console.ReadLine(), "dd.MM.yyyy",
+                CultureInfo.InvariantCulture, DateTimeStyles.None, out value);
 
-            if (DateTime.TryParseExact(Console.ReadLine(), "dd.MM.yyyy",
-                CultureInfo.InvariantCulture, DateTimeStyles.None, out DateTime value))
+            if (!isCorrect)
             {
-                return value;
+                Console.WriteLine("Ошибка: неверный формат даты.");
             }
-
-            Console.WriteLine("Ошибка: неверный формат даты.");
         }
+
+        return value;
     }
 
     public static string ReadOperationType()
     {
-        while (true)
+        string? text;
+        string result = "";
+
+        while (result == "")
         {
             Console.Write("Тип операции (1 - Поступление, 2 - Продажа): ");
-            string? text = Console.ReadLine();
+            text = Console.ReadLine();
 
             if (text == "1")
             {
-                return "Поступление";
+                result = "Поступление";
             }
-
-            if (text == "2")
+            else if (text == "2")
             {
-                return "Продажа";
+                result = "Продажа";
             }
-
-            Console.WriteLine("Ошибка: введите 1 или 2.");
+            else
+            {
+                Console.WriteLine("Ошибка: введите 1 или 2.");
+            }
         }
+
+        return result;
     }
 }

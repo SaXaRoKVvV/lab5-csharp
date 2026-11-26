@@ -16,11 +16,12 @@ public class Program
         Console.InputEncoding = Encoding.UTF8;
 
         bool exit = false;
+        int choice = 0;
 
         while (!exit)
         {
             PrintMenu();
-            int choice = InputHelper.ReadInt("Ваш выбор: ", 0, 6);
+            choice = InputHelper.ReadInt("Ваш выбор: ", 0, 6);
             Console.WriteLine();
 
             try

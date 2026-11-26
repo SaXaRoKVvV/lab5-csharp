@@ -23,13 +23,14 @@ public static class ExcelService
         using var stream = new FileStream(path, FileMode.Open, FileAccess.Read);
         IWorkbook workbook = WorkbookFactory.Create(stream);
         var db = new Database();
+        IRow? row;
 
         // Лист «Магазин»: ID магазина, Район, Адрес
         ISheet shopSheet = GetSheet(workbook, ShopSheet);
         for (int i = 1; i <= shopSheet.LastRowNum; i++)
         {
-            IRow row = shopSheet.GetRow(i);
-            if (IsEmpty(row))
+            row = shopSheet.GetRow(i);
+            if (row == null || IsEmpty(row))
             {
                 continue;
             }
@@ -44,8 +45,8 @@ public static class ExcelService
         ISheet productSheet = GetSheet(workbook, ProductSheet);
         for (int i = 1; i <= productSheet.LastRowNum; i++)
         {
-            IRow row = productSheet.GetRow(i);
-            if (IsEmpty(row))
+            row = productSheet.GetRow(i);
+            if (row == null || IsEmpty(row))
             {
                 continue;
             }
@@ -63,8 +64,8 @@ public static class ExcelService
         ISheet movementSheet = GetSheet(workbook, MovementSheet);
         for (int i = 1; i <= movementSheet.LastRowNum; i++)
         {
-            IRow row = movementSheet.GetRow(i);
-            if (IsEmpty(row))
+            row = movementSheet.GetRow(i);
+            if (row == null || IsEmpty(row))
             {
                 continue;
             }
@@ -85,6 +86,11 @@ public static class ExcelService
     public static void Save(Database db, string path)
     {
         IWorkbook workbook = new HSSFWorkbook();
+        IRow row;
+        ICell dateCell;
+        Movement movement;
+        Product product;
+        Shop shop;
 
         ICellStyle dateStyle = workbook.CreateCellStyle();
         dateStyle.DataFormat = workbook.CreateDataFormat().GetFormat("dd.MM.yyyy");
@@ -94,18 +100,18 @@ public static class ExcelService
             "Артикул", "Количество упаковок, шт", "Тип операции");
         for (int i = 0; i < db.Movements.Count; i++)
         {
-            Movement m = db.Movements[i];
-            IRow row = movementSheet.CreateRow(i + 1);
-            row.CreateCell(0).SetCellValue(m.OperationId);
+            movement = db.Movements[i];
+            row = movementSheet.CreateRow(i + 1);
+            row.CreateCell(0).SetCellValue(movement.OperationId);
 
-            ICell dateCell = row.CreateCell(1);
-            dateCell.SetCellValue(m.Date);
+            dateCell = row.CreateCell(1);
+            dateCell.SetCellValue(movement.Date);
             dateCell.CellStyle = dateStyle;
 
-            row.CreateCell(2).SetCellValue(m.ShopId);
-            row.CreateCell(3).SetCellValue(m.Article);
-            row.CreateCell(4).SetCellValue(m.PackCount);
-            row.CreateCell(5).SetCellValue(m.OperationType);
+            row.CreateCell(2).SetCellValue(movement.ShopId);
+            row.CreateCell(3).SetCellValue(movement.Article);
+            row.CreateCell(4).SetCellValue(movement.PackCount);
+            row.CreateCell(5).SetCellValue(movement.OperationType);
         }
 
         ISheet productSheet = workbook.CreateSheet(ProductSheet);
@@ -113,25 +119,25 @@ public static class ExcelService
             "Ед_изм", "Количество в упаковке", "Цена за упаковку");
         for (int i = 0; i < db.Products.Count; i++)
         {
-            Product p = db.Products[i];
-            IRow row = productSheet.CreateRow(i + 1);
-            row.CreateCell(0).SetCellValue(p.Article);
-            row.CreateCell(1).SetCellValue(p.Department);
-            row.CreateCell(2).SetCellValue(p.Name);
-            row.CreateCell(3).SetCellValue(p.Unit);
-            row.CreateCell(4).SetCellValue(p.QuantityInPack);
-            row.CreateCell(5).SetCellValue((double)p.PricePerPack);
+            product = db.Products[i];
+            row = productSheet.CreateRow(i + 1);
+            row.CreateCell(0).SetCellValue(product.Article);
+            row.CreateCell(1).SetCellValue(product.Department);
+            row.CreateCell(2).SetCellValue(product.Name);
+            row.CreateCell(3).SetCellValue(product.Unit);
+            row.CreateCell(4).SetCellValue(product.QuantityInPack);
+            row.CreateCell(5).SetCellValue((double)product.PricePerPack);
         }
 
         ISheet shopSheet = workbook.CreateSheet(ShopSheet);
         WriteHeader(shopSheet, "ID магазина", "Район", "Адрес");
         for (int i = 0; i < db.Shops.Count; i++)
         {
-            Shop s = db.Shops[i];
-            IRow row = shopSheet.CreateRow(i + 1);
-            row.CreateCell(0).SetCellValue(s.Id);
-            row.CreateCell(1).SetCellValue(s.District);
-            row.CreateCell(2).SetCellValue(s.Address);
+            shop = db.Shops[i];
+            row = shopSheet.CreateRow(i + 1);
+            row.CreateCell(0).SetCellValue(shop.Id);
+            row.CreateCell(1).SetCellValue(shop.District);
+            row.CreateCell(2).SetCellValue(shop.Address);
         }
 
         using var stream = new FileStream(path, FileMode.Create, FileAccess.Write);
