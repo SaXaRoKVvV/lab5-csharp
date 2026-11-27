@@ -43,7 +43,8 @@
 
 ### Тестирование
 
-<!-- сюда вставить скриншот главного меню и просмотра таблиц -->
+<img width="659" height="612" alt="image" src="https://github.com/user-attachments/assets/d2b5d92a-6673-4234-afdd-2c95d06aeaef" />
+
 
 ---
 
@@ -66,7 +67,8 @@
 
 ### Тестирование
 
-<!-- сюда вставить скриншот удаления элемента и проверки ссылочной целостности -->
+<img width="555" height="381" alt="image" src="https://github.com/user-attachments/assets/707ef338-9e73-474f-a9c2-476cea7609ba" />
+
 
 ---
 
@@ -91,7 +93,8 @@
 
 ### Тестирование
 
-<!-- сюда вставить скриншот добавления элемента -->
+<img width="585" height="438" alt="image" src="https://github.com/user-attachments/assets/163b3345-b73e-4cfa-8e00-52698fca9114" />
+
 
 ---
 
@@ -114,7 +117,8 @@
 
 ### Тестирование
 
-<!-- сюда вставить скриншот выполнения запроса 1 -->
+<img width="689" height="388" alt="image" src="https://github.com/user-attachments/assets/7d9b7530-9bd1-421b-8f8e-3f0dbbcc8aea" />
+
 
 ---
 
@@ -137,7 +141,8 @@
 
 ### Тестирование
 
-<!-- сюда вставить скриншот выполнения запроса 2 -->
+<img width="734" height="222" alt="image" src="https://github.com/user-attachments/assets/8aafaa77-c858-45d4-9ddc-fc2f1bc5f436" />
+
 
 ---
 
@@ -160,7 +165,8 @@
 
 ### Тестирование
 
-<!-- сюда вставить скриншот выполнения запроса 3 -->
+<img width="704" height="724" alt="image" src="https://github.com/user-attachments/assets/a8e5780b-536b-4fb8-bb2e-4699d1e9a166" />
+
 
 ---
 
@@ -184,7 +190,8 @@
 
 ### Тестирование
 
-<!-- сюда вставить скриншот выполнения запроса 4 -->
+<img width="712" height="307" alt="image" src="https://github.com/user-attachments/assets/979d6239-491b-4bfd-b299-bbad2d47d480" />
+
 
 ---
 
@@ -206,4 +213,7 @@
 
 ### Тестирование
 
-<!-- сюда вставить скриншот сохранения изменений в файл -->
+<img width="442" height="180" alt="image" src="https://github.com/user-attachments/assets/44b08856-bc18-4a1f-8ef6-ed50e7ee9b99" />
+<img width="561" height="77" alt="image" src="https://github.com/user-attachments/assets/c6f0de8a-759a-4412-af94-f980b8d17266" />
+
+
